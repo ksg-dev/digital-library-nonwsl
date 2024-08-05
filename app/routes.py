@@ -10,12 +10,16 @@ def home():
 
 @app.route('/add', methods=["GET", "POST"])
 def add():
-    form = BookForm()
     if request.method == "POST":
+        form = BookForm()
         if form.validate_on_submit():
             title = form.title.data.title()
             author = form.author.data.title()
             rating = form.rating.data
+
+            print(f"{title} - {author} - {rating}")
+
+
 
             # CREATE RECORD
             with app.app_context():
@@ -24,8 +28,6 @@ def add():
                 db.session.commit()
 
                 return redirect(url_for('home'))
-
-
 
     return render_template('add.html')
 

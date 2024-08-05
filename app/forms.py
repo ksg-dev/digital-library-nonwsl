@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, FloatField
 from wtforms.validators import DataRequired
+from app import db
 
 
 class BookForm(FlaskForm):
@@ -9,4 +10,4 @@ class BookForm(FlaskForm):
     rating = FloatField('Rating', validators=[DataRequired()])
 
     # def validate_title(self, title):
-    #     book = db.session.scalar()
+    #     book = db.session.scalars()

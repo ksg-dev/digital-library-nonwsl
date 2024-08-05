@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Float
-from app import db
+from app import app, db
 
 
 class Book(db.Model):
@@ -12,3 +12,8 @@ class Book(db.Model):
 
     def __repr__(self):
         return f"<Book {self.title}>"
+
+
+# Create table schema in db. Requires app context
+with app.app_context():
+    db.create_all()
