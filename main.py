@@ -26,16 +26,16 @@ app = Flask(__name__)
 # configure the SQLite database, relative to the app instance folder
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///books-collection.db"
 
-db = SQLAlchemy(app)
-# # initialize the app with the extension
-# db.init_app(app)
+db = SQLAlchemy(model_class=Base)
+# initialize the app with the extension
+db.init_app(app)
 
 # Create table
 class Book(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(250), unique=True, nullable=False)
-    author = db.Column(db.String(250), nullable=False)
-    rating = db.Column(db.Float, nullable=False)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str] = mapped_column(unique=True, nullable=False)
+    author: Mapped[str] = mapped_column(nullable=False)
+    rating: Mapped[float] = mapped_column(nullable=False)
 
     def __repr__(self):
         return f"<Book {self.title}>"
@@ -60,11 +60,16 @@ def add():
         author = request.form["author"].title()
         rating = request.form["rating"]
 
-        # CREATE RECORD
-        with app.app_context():
-            new_book = Book(title=title, author=author, rating=rating)
-            db.session.add(new_book)
-            db.session.commit()
+        try:
+            # CREATE RECORD
+            with app.app_context():
+                new_book = Book(title=title, author=author, rating=rating)
+                db.session.add(new_book)
+                db.session.commit()
+
+            return redirect(url_for('home'))
+
+        except IntegrityError:
 
     return render_template('add.html')
 

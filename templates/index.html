@@ -9,25 +9,12 @@
     {% if not library %}
     <p>Library is empty. Click below to add a book.</p>
     {% else %}
-    <table>
-         <thead>
-            <tr>
-               <th>Title</th>
-               <th>Author</th>
-               <th>Rating</th>
-            </tr>
-         </thead>
 
-         <tbody>
-            {% for book in library %}
-               <tr>
-                  <td>{{ book.title }}</td>
-                  <td>{{ book.author }}</td>
-                  <td>{{ book.rating }}</td>
-               </tr>
-            {% endfor %}
-         </tbody>
-      </table>
+    <ul>
+      {% for book in library %}
+      <li>{{ book.title }} - {{ book.author }} - {{ book.rating }}/10</li>
+      {% endfor %}
+    </ul>
     {% endif %}
     <a href="{{ url_for('add') }}">Add New Book</a>
   </body>
