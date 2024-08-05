@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Float
-
 '''
 Red underlines? Install the required packages first: 
 Open the Terminal in PyCharm (bottom left). 
@@ -17,6 +16,7 @@ This will install the packages from requirements.txt for this project.
 '''
 
 
+# Base Model
 class Base(DeclarativeBase):
     pass
 
@@ -30,6 +30,7 @@ db = SQLAlchemy(model_class=Base)
 # initialize the app with the extension
 db.init_app(app)
 
+
 # Create table
 class Book(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -40,8 +41,6 @@ class Book(db.Model):
     def __repr__(self):
         return f"<Book {self.title}>"
 
-
-all_books = []
 
 # Create table schema in db. Requires app context
 with app.app_context():
@@ -60,16 +59,15 @@ def add():
         author = request.form["author"].title()
         rating = request.form["rating"]
 
-        try:
-            # CREATE RECORD
-            with app.app_context():
-                new_book = Book(title=title, author=author, rating=rating)
-                db.session.add(new_book)
-                db.session.commit()
+        # CREATE RECORD
+        with app.app_context():
+            new_book = Book(title=title, author=author, rating=rating)
+            db.session.add(new_book)
+            db.session.commit()
 
             return redirect(url_for('home'))
 
-        except IntegrityError:
+
 
     return render_template('add.html')
 
