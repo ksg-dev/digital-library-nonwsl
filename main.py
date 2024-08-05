@@ -43,6 +43,7 @@ class Book(db.Model):
 
 all_books = []
 
+# Create table schema in db. Requires app context
 with app.app_context():
     db.create_all()
 
