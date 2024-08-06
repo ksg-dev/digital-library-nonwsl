@@ -13,15 +13,15 @@ class Book(db.Model):
     def __repr__(self):
         return f"<Book {self.title}>"
 
-    @validates("title")
-    def validate_title(self, key, title):
-        if not title:
-            raise AssertionError("Please enter book title")
-
-        if Book.query.filter(Book.title == title).first():
-            raise AssertionError("Title already in database")
-
-        return title
+    # @validates("title")
+    # def validate_title(self, key, title):
+    #     if not title:
+    #         raise AssertionError("Please enter book title")
+    #
+    #     if Book.query.filter(Book.title == title).first():
+    #         raise AssertionError("Title already in database")
+    #
+    #     return title
     #
     # @validates("author")
     # def validate_author(self, author):
@@ -45,3 +45,7 @@ class Book(db.Model):
 # Create table schema in db. Requires app context
 with app.app_context():
     db.create_all()
+
+def validate_title(title):
+    check = db.session.execute(db.select(Book).filter_by(title=title)).first()
+    return check

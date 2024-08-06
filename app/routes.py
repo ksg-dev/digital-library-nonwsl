@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from app import app, db
 from app.forms import BookForm
-from app.models import Book
+from app.models import Book, validate_title
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -25,22 +25,22 @@ def add():
             print(f"{title} - {author} - {rating}")
 
             # Check for title
-            # title_check = db.session.scalar(SQLAlchemy.select(Book).where(Book.title == title))
-            # if title_check is None:
-            #     # flash("Title already in database")
-            #     print("Title verified")
+            title_check = validate_title(title)
 
-            new_book = Book(title=title, author=author, rating=rating)
+            if title_check is None:
+                print("Title verified")
 
-            try:
-                db.session.add(new_book)
-                db.session.commit()
-                print("Success")
-                return redirect(url_for('home'))
+                new_book = Book(title=title, author=author, rating=rating)
 
-            except AssertionError as exception_message:
-                return jsonify(msg="Error: {}. ".format(exception_message))
+                with app.app_context():
+                    db.session.add(new_book)
+                    db.session.commit()
 
-    return render_template('add.html', form=form)
+                return redirect(url_for("home"))
+
+            else:
+                return render_template('add.html', error="Title already in database.", form=form)
+
+    return render_template('add.html', error=None, form=form)
 
 

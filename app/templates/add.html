@@ -5,6 +5,7 @@
     <title>Add Book</title>
   </head>
   <body>
+
     <form action="{{ url_for('add') }}" method="POST">
       {{ form.csrf_token }}
       {{ form.title.label }} {{ form.title(size=30) }}
@@ -14,7 +15,9 @@
 
       <input type="submit" value="Add Book">
     </form>
-
+  {% if error %}
+    {{ error }}
   <a href="{{ url_for('home') }}">Home</a>
+  {% endif %}
   </body>
 </html>
