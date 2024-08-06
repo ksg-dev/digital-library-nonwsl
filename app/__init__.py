@@ -3,8 +3,6 @@ from config import Config, Base
 from flask_sqlalchemy import SQLAlchemy
 
 
-
-
 app = Flask(__name__)
 
 app.config.from_object(Config)

@@ -19,10 +19,7 @@ def add():
             author = form.author.data.title()
             rating = form.rating.data
 
-            # if form.validate_on_submit():
-
-            # print("SUCCESS")
-            print(f"{title} - {author} - {rating}")
+            # print(f"{title} - {author} - {rating}")
 
             # Check for title
             title_check = validate_title(title)
@@ -39,7 +36,7 @@ def add():
                 return redirect(url_for("home"))
 
             else:
-                return render_template('add.html', error="Title already in database.", form=form)
+                return render_template('add.html', error=f"Title already in database.\n\n", form=form)
 
     return render_template('add.html', error=None, form=form)
 

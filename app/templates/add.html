@@ -16,8 +16,11 @@
       <input type="submit" value="Add Book">
     </form>
   {% if error %}
-    {{ error }}
-  <a href="{{ url_for('home') }}">Home</a>
+    <h2 style="color: red;">{{ error }}</h2>
+
   {% endif %}
+    <br>
+    <br>
+  <a href="{{ url_for('home') }}">Home</a>
   </body>
 </html>
