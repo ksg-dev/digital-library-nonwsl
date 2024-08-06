@@ -1,12 +1,20 @@
-{% extends "base.html" %}
-{% from 'bootstrap5/form.html' import render_form %}
-{% block title %}Add Book{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add Book</title>
+  </head>
+  <body>
+    <form action="{{ url_for('add') }}" method="POST">
+      {{ form.csrf_token }}
+      {{ form.title.label }} {{ form.title(size=30) }}
+      {{ form.author.label }} {{ form.author(size=30) }}
+      {{ form.rating.label }} {{ form.rating(size=30) }}
 
-{% block content %}
-  <div class="container">
-    <h1>Add Book</h1>
-    {{ render_form(form, novalidate=True }}
-  </div>
+
+      <input type="submit" value="Add Book">
+    </form>
 
   <a href="{{ url_for('home') }}">Home</a>
-{% endblock %}
+  </body>
+</html>

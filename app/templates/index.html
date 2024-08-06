@@ -1,9 +1,10 @@
-{% extends "base.html" %}
-{% from 'bootstrap5/form.html' import render_form %}
-{% block title %}Library{% endblock %}
-
-{% block content %}
-  <div class="container">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Library</title>
+  </head>
+  <body>
     <h1>My Library</h1>
     {% if not library %}
     <p>Library is empty. Click below to add a book.</p>
@@ -16,5 +17,5 @@
     </ul>
     {% endif %}
     <a href="{{ url_for('add') }}">Add New Book</a>
-  </div>
-{% endblock %}
+  </body>
+</html>
