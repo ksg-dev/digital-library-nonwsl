@@ -12,7 +12,8 @@
 
     <ul>
       {% for book in library %}
-      <li>{{ book.title }} - {{ book.author }} - {{ book.rating }}/10</li>
+      <div class="book-preview"
+      <li>{{ book.title }} - {{ book.author }} - {{ book.rating }}/10 - <a href="{{ url_for('get_book', num=book.id) }}">View Record</a></li>
       {% endfor %}
     </ul>
     {% endif %}
