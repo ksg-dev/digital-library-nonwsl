@@ -48,8 +48,8 @@ def get_book(num):
     print(target_book)
     return render_template("record.html", book=target_book)
 
-@app.route("/search/<search_for>")
+@app.route("/search")
 def search():
-    search_for = None
+    search_for = request.form["search"]
     search_terms = db.session.execute(db.select(Book).where(Book.title == f'%{search_for}%')).scalars()
     return render_template("search.html", query_results=search_terms)
