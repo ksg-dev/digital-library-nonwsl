@@ -3,23 +3,13 @@
 {% block title %}View Record{% endblock %}
 
 {% block content %}
+
+	<div class="container">
 		<!-- Header -->
 			<header id="header">
 				<h1>{{ book.title }}</h1>
 				<h2>{{ book.author }}</h2>
 				<h3>{{ book.rating }}</h3>
 			</header>
-
-		<!-- Footer -->
-			<footer id="footer">
-
-				<ul class="copyright">
-					<li>&copy; Untitled.</li><li>Credits: <a href="http://html5up.net">HTML5 UP</a></li>
-				</ul>
-			</footer>
-
-		<!-- Scripts -->
-			<script src="static/assets/js/main.js"></script>
-
-	</body>
-</html>
+	</div>
+{% endblock %}
