@@ -1,22 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Library</title>
-  </head>
-  <body>
+{% extends "base.html" %}
+
+{% block title %}My Library{% endblock %}
+
+{% block content %}
     <h1>My Library</h1>
     {% if not library %}
     <p>Library is empty. Click below to add a book.</p>
     {% else %}
 
-    <ul>
-      {% for book in library %}
-      <div class="book-preview"
-      <li>{{ book.title }} - {{ book.author }} - {{ book.rating }}/10 - <a href="{{ url_for('get_book', num=book.id) }}">View Record</a></li>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Rating</th>
+        <th>Record Link</th>
+      </tr>
+      </thead>
+
+      <tbody>
+        {% for book in library %}
+        <tr>
+          <td>{{ book.id }}</td>
+          <td>{{ book.title }}</td>
+          <td>{{ book.author }}</td>
+          <td>{{ book.rating }}</td>
+          <td><a href="{{ url_for('get_book', num=book.id) }}">View Record</a></td>
+        </tr>
       {% endfor %}
-    </ul>
-    {% endif %}
+      </tbody>
+      {% endif %}
+    </table>
+    <br>
     <a href="{{ url_for('add') }}">Add New Book</a>
-  </body>
-</html>
+{% endblock %}

@@ -3,7 +3,9 @@ from app import app, db
 from app.forms import BookForm
 from app.models import Book, validate_title
 from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap5
 
+bootstrap = Bootstrap5(app)
 
 @app.route('/')
 def home():
@@ -40,7 +42,7 @@ def add():
 
     return render_template('add.html', error=None, form=form)
 
-@app.route("/book/<int:id>")
+@app.route("/book/<int:num>")
 def get_book(num):
     target_book = db.session.execute(db.select(Book).filter_by(id=num)).first()
     print(target_book)
