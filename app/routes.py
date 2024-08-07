@@ -47,3 +47,9 @@ def get_book(num):
     target_book = db.session.execute(db.select(Book).filter_by(id=num)).first()
     print(target_book)
     return render_template("record.html", book=target_book)
+
+@app.route("/search/<search_for>")
+def search():
+    search_for = None
+    search_terms = db.session.execute(db.select(Book).where(Book.title == f'%{search_for}%')).scalars()
+    return render_template("search.html", query_results=search_terms)
