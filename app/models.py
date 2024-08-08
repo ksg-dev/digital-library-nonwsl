@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column
 from app import app, db
+from flask import request
 
 
 class Book(db.Model):

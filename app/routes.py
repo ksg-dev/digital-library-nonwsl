@@ -7,9 +7,7 @@ from flask_bootstrap import Bootstrap5
 
 bootstrap = Bootstrap5(app)
 
-@app.route('/')
-def home():
-    return render_template('index.html', library=Book.query.all())
+
 
 
 @app.route('/add', methods=["GET", "POST"])
@@ -48,8 +46,24 @@ def get_book(num):
     print(target_book)
     return render_template("record.html", book=target_book)
 
-@app.route("/search")
-def search():
-    search_for = request.form["search"]
-    search_terms = db.session.execute(db.select(Book).where(Book.title == f'%{search_for}%')).scalars()
-    return render_template("search.html", query_results=search_terms)
+@app.route("/search/<terms>")
+def search(terms):
+    # query_terms = request.args.get("q")
+    # print(f"search function: {query_terms}")
+
+    search_for = db.session.execute(db.select(Book).filter(Book.title.like(f"%{terms}%"))).scalars().all()
+
+    search_results = []
+    for i in search_for:
+        print(i.id, i.title, i.author, i.rating)
+    return render_template("search.html", query_results=search_for)
+
+@app.route('/', methods=["GET", "POST"])
+def home():
+    query = request.args.get("q")
+    print(query)
+    if query is not None:
+        return redirect(url_for('search', terms=query))
+
+    else:
+        return render_template('index.html', library=Book.query.all(), query=None)
