@@ -42,7 +42,7 @@ def add():
 
 @app.route("/book/<int:num>")
 def get_book(num):
-    target_book = db.session.execute(db.select(Book).filter_by(id=num)).first()
+    target_book = db.session.execute(db.select(Book).filter_by(id=num)).scalars().first()
     print(target_book)
     return render_template("record.html", book=target_book)
 
