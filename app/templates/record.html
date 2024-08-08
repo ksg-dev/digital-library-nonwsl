@@ -13,7 +13,12 @@
 <p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
 				<h3><img src="../static/images/like.svg" alt="like icon" height="24"> {{ book.rating }} / 10</h3>
 			</header>
-
-
 	</div>
+
+	<br>
+
+	<div class="container">
+		<a href="{{ url_for('update', target_id=book.id) }}" type="button" class="btn btn-secondary">Update Record</a>
+	</div>
+
 {% endblock %}
