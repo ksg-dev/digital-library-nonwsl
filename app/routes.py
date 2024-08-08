@@ -58,34 +58,6 @@ def search(terms):
         print(i.id, i.title, i.author, i.rating)
     return render_template("search.html", query_results=search_for)
 
-@app.route("/update/<target_id>", methods=["GET", "POST"])
-def update(target_id):
-    book_to_update = db.session.execute(db.select(Book).where(Book.id == target_id)).scalar()
-    form = BookForm(obj=book_to_update)
-    current_title = form.title.data
-    print(f"current b4 if: {current_title}")
-    if form.validate_on_submit():
-        form.populate_obj(book_to_update)
-        update_title = form.title.data.title()
-        print(f"current title: {current_title}")
-        print(f"update: {update_title}")
-
-        if current_title != update_title:
-
-            # Check for title
-            title_check = validate_title(update_title)
-
-            if title_check is None:
-                print("Title verified")
-                print(f"title_check: {title_check}")
-
-                db.session.add(book_to_update)
-                db.session.commit()
-                return redirect(url_for('home'))
-
-    return render_template("add.html", error=None, form=form)
-
-
 
 @app.route('/', methods=["GET", "POST"])
 def home():
@@ -96,3 +68,35 @@ def home():
 
     else:
         return render_template('index.html', library=Book.query.all(), query=None)
+
+
+@app.route("/update/<target_id>", methods=["GET", "POST"])
+def update(target_id):
+    book_to_update = db.session.execute(db.select(Book).where(Book.id == target_id)).scalar()
+    form = BookForm(obj=book_to_update)
+    current_title = form.title.data
+    print(f"current b4 if: {current_title}")
+    if request.method == "POST":
+        if form.validate_on_submit():
+            form.populate_obj(book_to_update)
+            update_title = form.title.data.title()
+            print(f"current title: {current_title}")
+            print(f"update: {update_title}")
+
+            if current_title != update_title:
+
+                # Check for title
+                title_check = validate_title(update_title)
+
+                if title_check is None:
+                    print("Title verified")
+                    print(f"title_check: {title_check}")
+
+                    db.session.add(book_to_update)
+                    db.session.commit()
+                    return redirect(url_for('home'))
+
+    return render_template("update.html", error=None, form=form)
+
+
+
