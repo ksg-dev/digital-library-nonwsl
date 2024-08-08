@@ -7,9 +7,13 @@
 	<div class="container">
 		<!-- Header -->
 			<header id="header">
-				<h1>{{ book.title }}</h1>
-				<h2>{{ book.author }}</h2>
-				<h3>{{ book.rating }}</h3>
+				<h3>
+  {{ book.title }}
+  <small class="text-body-secondary">by {{ book.author }}</small></h3>
+<p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+				<h3><img src="../static/images/like.svg" alt="like icon" height="24"> {{ book.rating }} / 10</h3>
 			</header>
+
+
 	</div>
 {% endblock %}
