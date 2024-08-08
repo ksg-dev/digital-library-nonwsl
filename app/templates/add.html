@@ -13,7 +13,10 @@
       {{ form.rating.label }} {{ form.rating(size=30) }}
 
 
-      <input type="submit" value="Add Book">
+        <input type="submit" value="Add Book">
+    {% else %}
+        <input type="submit" value="Update Record">
+
     </form>
   {% if error %}
     <h2 style="color: red;">{{ error }}</h2>
