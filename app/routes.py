@@ -101,6 +101,17 @@ def update(num):
 
             return redirect(url_for("get_book", num=num))
 
+@app.route("/book/<int:num>/delete", methods=["GET", "POST"])
+def delete(num):
+    book_to_delete = db.session.execute(db.select(Book).where(Book.id == num)).scalar()
+
+
+    db.session.delete(book_to_delete)
+    db.session.commit()
+
+    flash("Success! Record Deleted.")
+
+    return redirect("home")
 
 
 
