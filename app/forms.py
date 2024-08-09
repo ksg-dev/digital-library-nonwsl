@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, DecimalField, SubmitField, HiddenField
 from wtforms.validators import InputRequired, NumberRange, ValidationError
 from app import db
-from models import Book
+from app.models import Book
 
 
 
