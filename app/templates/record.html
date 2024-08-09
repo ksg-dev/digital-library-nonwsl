@@ -20,18 +20,7 @@
 
 	<div class="container">
 		<a href="{{ url_for('update', num=book.id) }}" type="button" class="btn btn-secondary">Update Record</a>
-    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-        <button type="button" class="btn btn-danger">Danger Zone</button>
-        <div class="btn-group" role="group">
-            <button id="btnGroupDrop4" type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop4">
-                <a class="dropdown-item" href="{{ url_for('delete', num=book.id) }}">Delete Record</a>
-                <a class="dropdown-item" href="#">Dropdown link</a>
-            </div>
-        </div>
+        <a href="{{ url_for('delete', num=book.id) }}" type="button" class="btn btn-danger">Delete Record</a>
     </div>
-
-
-
 
 {% endblock %}

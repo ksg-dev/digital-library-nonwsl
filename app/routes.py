@@ -111,7 +111,7 @@ def delete(num):
 
     flash("Success! Record Deleted.")
 
-    return redirect("home")
+    return redirect(url_for("home"))
 
 
 
