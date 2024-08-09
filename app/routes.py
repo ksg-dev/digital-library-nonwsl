@@ -57,7 +57,6 @@ def search(terms):
 @app.route('/', methods=["GET", "POST"])
 def home():
     query = request.args.get("q")
-    print(query)
     if query is not None:
         return redirect(url_for('search', terms=query))
 
