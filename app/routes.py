@@ -88,15 +88,16 @@ def update(num):
     elif request.method == "POST":
 
         if form.validate_on_submit():
-            book_to_update.title = form.title.data
-            book_to_update.author = form.author.data
+            book_to_update.title = form.title.data.title()
+            book_to_update.author = form.author.data.title()
             book_to_update.rating = form.rating.data
             print(f"Title - og: {og_title} --> {book_to_update.title}")
             print(f"Author - og: {og_author} --> {book_to_update.author}")
             print(f"Rating - og: {og_rating} --> {book_to_update.rating}")
 
             db.session.commit()
-            flash("Record updated successfully")
+
+
             return redirect(url_for("get_book", num=num))
 
 
