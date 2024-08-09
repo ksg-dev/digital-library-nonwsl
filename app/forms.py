@@ -23,3 +23,4 @@ class BookForm(FlaskForm):
                           places=1
                         )
     submit = SubmitField("Add Book")
+
