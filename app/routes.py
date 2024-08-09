@@ -69,23 +69,35 @@ def home():
     else:
         return render_template('index.html', library=Book.query.all(), query=None)
 
-# @app.route("/update/<target_id>", methods=["GET", "POST"])
-# def update(target_id):
-#     book_to_update = db.session.execute(db.select(Book).where(Book.id == target_id)).scalar()
-#     form = EditBookForm(obj=book_to_update, og_title=book_to_update.title, key=book_to_update.id)
-#
-#     if request.method == "POST" and form.validate_on_submit():
-#         book_to_update.title = form.title.data
-#         book_to_update.author = form.author.data
-#         book_to_update.rating = form.rating.data
-#         db.session.commit()
-#         flash("Record updated successfully")
-#         return redirect(url_for("get_book", num=target_id))
-#     elif request.method == "GET":
-#         form.title.data = book_to_update.title
-#         form.author.data = book_to_update.author
-#         form.rating.data = book_to_update.rating
-#     return render_template("update.html", error=None, form=form, target_id=target_id)
+@app.route("/book/<int:num>/update", methods=["GET", "POST"])
+def update(num):
+    book_to_update = db.session.execute(db.select(Book).where(Book.id == num)).scalar()
+    form = BookForm(obj=book_to_update)
+
+    og_title = form.title.data
+    og_author = form.author.data
+    og_rating = form.rating.data
+
+    if request.method == "GET":
+
+        form.title.data = book_to_update.title
+        form.author.data = book_to_update.author
+        form.rating.data = book_to_update.rating
+        return render_template("update.html", error=None, form=form, num=num)
+
+    elif request.method == "POST":
+
+        if form.validate_on_submit():
+            book_to_update.title = form.title.data
+            book_to_update.author = form.author.data
+            book_to_update.rating = form.rating.data
+            print(f"Title - og: {og_title} --> {book_to_update.title}")
+            print(f"Author - og: {og_author} --> {book_to_update.author}")
+            print(f"Rating - og: {og_rating} --> {book_to_update.rating}")
+
+            db.session.commit()
+            flash("Record updated successfully")
+            return redirect(url_for("get_book", num=num))
 
 
 # @app.route("/update/<target_id>", methods=["GET", "POST"])

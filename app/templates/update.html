@@ -6,14 +6,14 @@
 
 <div class="container py-5">
 
-    <form action="{{ url_for('update', target_id=id) }}" method="POST">
+    <form action="{{ url_for('update', num=num) }}" method="POST">
       {{ form.csrf_token }}
       {{ form.title.label }} {{ form.title(size=30) }}
       {{ form.author.label }} {{ form.author(size=30) }}
       {{ form.rating.label }} {{ form.rating(size=30) }}
 
 
-        <input type="submit" value="Update Record">
+      <input type="submit" value="Update Record">
 
     </form>
   {% if error %}
