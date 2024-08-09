@@ -8,8 +8,6 @@ from flask_bootstrap import Bootstrap5
 bootstrap = Bootstrap5(app)
 
 
-
-
 @app.route('/add', methods=["GET", "POST"])
 def add():
     form = BookForm()
@@ -18,8 +16,6 @@ def add():
             title = form.title.data.title()
             author = form.author.data.title()
             rating = form.rating.data
-
-            # print(f"{title} - {author} - {rating}")
 
             # Check for title
             title_check = validate_title(title)
@@ -40,20 +36,19 @@ def add():
 
     return render_template('add.html', error=None, form=form)
 
+
 @app.route("/book/<int:num>")
 def get_book(num):
     target_book = db.session.execute(db.select(Book).filter_by(id=num)).scalars().first()
     print(target_book)
     return render_template("record.html", book=target_book)
 
+
 @app.route("/search/<terms>")
 def search(terms):
-    # query_terms = request.args.get("q")
-    # print(f"search function: {query_terms}")
 
     search_for = db.session.execute(db.select(Book).filter(Book.title.like(f"%{terms}%"))).scalars().all()
 
-    search_results = []
     for i in search_for:
         print(i.id, i.title, i.author, i.rating)
     return render_template("search.html", query_results=search_for)
@@ -68,6 +63,7 @@ def home():
 
     else:
         return render_template('index.html', library=Book.query.all(), query=None)
+
 
 @app.route("/book/<int:num>/update", methods=["GET", "POST"])
 def update(num):
@@ -101,10 +97,10 @@ def update(num):
 
             return redirect(url_for("get_book", num=num))
 
+
 @app.route("/book/<int:num>/delete", methods=["GET", "POST"])
 def delete(num):
     book_to_delete = db.session.execute(db.select(Book).where(Book.id == num)).scalar()
-
 
     db.session.delete(book_to_delete)
     db.session.commit()
